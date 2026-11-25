@@ -1,0 +1,18 @@
+{
+  "name": "lambda-web-adapter-error-console",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Consola ligera para consultar errores de servicios almacenados en DynamoDB.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.900.0",
+    "@aws-sdk/lib-dynamodb": "^3.900.0",
+    "express": "^5.1.0"
+  }
+}

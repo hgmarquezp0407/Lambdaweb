@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#08090d" />
+    <meta
+      name="description"
+      content="Consola de errores de servicios con análisis asistido."
+    />
+    <title>Lambda Web — Error observatory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Lambda Web, inicio">
+          <span class="brand-mark">λ</span>
+          <span class="brand-copy">LAMBDA<span>WEB</span></span>
+        </a>
+        <div class="topbar-right">
+          <span class="live-indicator"><i></i> SISTEMAS OPERATIVOS</span>
+          <span class="topbar-divider"></span>
+          <span class="workspace-label">PRODUCCIÓN <b>⌄</b></span>
+          <span class="avatar">LW</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="page-heading">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> OBSERVABILIDAD / LOGS</div>
+            <h1>Centro de <span>errores</span></h1>
+            <p class="page-subtitle">Detecta, entiende y resuelve incidentes de tus servicios.</p>
+          </div>
+          <button class="refresh-button" id="refresh-button" type="button">
+            <span aria-hidden="true">↻</span> Actualizar
+          </button>
+        </section>
+
+        <section class="overview-grid" aria-label="Resumen de errores">
+          <article class="overview-card">
+            <div class="overview-label">ERRORES ACTIVOS <span class="metric-icon purple">⌁</span></div>
+            <div class="overview-value" id="metric-total">—</div>
+            <div class="overview-foot"><span class="metric-dot purple-dot"></span> Incidentes detectados</div>
+          </article>
+          <article class="overview-card">
+            <div class="overview-label">CRÍTICOS <span class="metric-icon pink">!</span></div>
+            <div class="overview-value" id="metric-critical">—</div>
+            <div class="overview-foot"><span class="metric-dot pink-dot"></span> Requieren atención inmediata</div>
+          </article>
+          <article class="overview-card">
+            <div class="overview-label">EN ANÁLISIS <span class="metric-icon cyan">◷</span></div>
+            <div class="overview-value" id="metric-thinking">—</div>
+            <div class="overview-foot"><span class="metric-dot cyan-dot"></span> Agente investigando</div>
+          </article>
+          <article class="overview-card">
+            <div class="overview-label">SERVICIOS AFECTADOS <span class="metric-icon green">◇</span></div>
+            <div class="overview-value" id="metric-services">—</div>
+            <div class="overview-foot"><span class="metric-dot green-dot"></span> Con errores activos</div>
+          </article>
+        </section>
+
+        <div class="content-grid">
+          <section class="errors-panel" aria-labelledby="errors-title">
+            <div class="panel-heading">
+              <div>
+                <h2 id="errors-title">Incidentes recientes</h2>
+                <p>Eventos agrupados por servicio y criticidad</p>
+              </div>
+              <label class="filter-wrap">
+                <span class="sr-only">Filtrar errores</span>
+                <select id="severity-filter" aria-label="Filtrar por criticidad">
+                  <option value="all">Todas las criticidades</option>
+                  <option value="critical">Crítica</option>
+                  <option value="high">Alta</option>
+                  <option value="medium">Media</option>
+                  <option value="low">Baja</option>
+                </select>
+              </label>
+            </div>
+            <div class="cards-grid" id="errors-list" aria-live="polite">
+              <div class="cards-message">Conectando con DynamoDB…</div>
+            </div>
+            <div class="panel-footer">
+              <span id="results-count">—</span>
+              <span class="data-source"><i></i> DynamoDB · Sincronización en vivo</span>
+            </div>
+          </section>
+
+          <aside class="insight-panel" aria-labelledby="insight-title">
+            <div class="insight-topline">
+              <span class="insight-badge"><span>✦</span> LAMBDA INTELLIGENCE</span>
+              <span class="online-dot" title="Agente conectado"></span>
+            </div>
+            <div class="insight-empty" id="insight-empty">
+              <div class="orbit-art" aria-hidden="true">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="orbit-core">λ</div>
+                <span class="orbit-node node-one"></span>
+                <span class="orbit-node node-two"></span>
+                <span class="orbit-node node-three"></span>
+              </div>
+              <h2 id="insight-title">Entiende el origen.<br /><span>Resuelve más rápido.</span></h2>
+              <p>Selecciona un incidente para explorar su origen, revisar el análisis del agente y encontrar el camino a la solución.</p>
+              <div class="insight-tip"><span>✧</span> Análisis contextual de tus servicios</div>
+            </div>
+            <div class="insight-detail hidden" id="insight-detail" aria-live="polite"></div>
+            <div class="insight-footer"><span>POWERED BY</span><strong>λ LAMBDA INTELLIGENCE</strong></div>
+          </aside>
+        </div>
+        <div class="toast hidden" id="toast" role="status"></div>
+      </main>
+    </div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
